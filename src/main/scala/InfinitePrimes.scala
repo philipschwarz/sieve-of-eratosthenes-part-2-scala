@@ -1,5 +1,5 @@
 
-import cats.{Eval, Foldable}, cats.implicits.*, cats.syntax._
+import cats.{Eval, Foldable}, cats.implicits.*
 
 import scala.concurrent.duration.Duration
 
@@ -9,7 +9,7 @@ def primes: LazyList[Int] =
 
   2 #:: minus(LazyList.from(3), composites)
 
-def multiples(n: Int) =
+def multiples(n: Int): LazyList[Int] =
   LazyList.from(n) map (n * _)
 
 val minus: (LazyList[Int], LazyList[Int]) => LazyList[Int] =
@@ -39,7 +39,7 @@ def eval[A](expression: => A): (A, Duration) =
   val duration = endTime - startTime
   (result, Duration(duration,"ms"))
 
-@main def main: Unit =
+@main def main(): Unit =
 
   assert(
     primes.take(100).toList
@@ -58,7 +58,7 @@ def eval[A](expression: => A): (A, Duration) =
 
   println(s"First 100 primes: ${primes.take(100).toList}")
 
-  List((1_000,7_919), (10_000,104_729), (50_000,611_953), (100_000, 1_299_709), (1_000_000,15_485_863)).foreach { (n,expectedPrime) =>
+  List((1_000, 7_919), (10_000, 104_729), (50_000, 611_953), (100_000, 1_299_709), (1_000_000, 15_485_863)).foreach { (n,expectedPrime) =>
     val (prime,time) = eval(primes(n-1))
     assert(prime == expectedPrime)
     println(s"n=$n; prime=$prime; time=$time" )
