@@ -59,7 +59,7 @@ def eval[A](expression: => A): (A, Duration) =
   println(s"First 100 primes: ${primes.take(100).toList}")
 
   List((1_000,7_919), (10_000,104_729), (50_000,611_953), (100_000, 1_299_709), (1_000_000,15_485_863)).foreach { (n,expectedPrime) =>
-    val (prime,t) = eval(primes(n-1))
+    val (prime,time) = eval(primes(n-1))
     assert(prime == expectedPrime)
-    println(s"n=$n; prime=$prime; time=$t" )
+    println(s"n=$n; prime=$prime; time=$time" )
   }
